@@ -1,0 +1,305 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is signer spec of cybex.io.",
+    "version" : "1.0.0",
+    "title" : "Cybex Signer",
+    "termsOfService" : "https://www.cybex.io/app/terms",
+    "contact" : {
+      "email" : "service@cybex.io"
+    }
+  },
+  "host" : "localhost:8090",
+  "basePath" : "/signer/v1",
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/newOrder" : {
+      "post" : {
+        "summary" : "Get signature of new limit order",
+        "operationId" : "newOrder.post",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NewOrderRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request was successful",
+            "schema" : {
+              "type" : "object",
+              "properties" : { }
+            }
+          },
+          "400" : {
+            "description" : "Parameter Error"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
+      }
+    },
+    "/cancelOrder" : {
+      "post" : {
+        "summary" : "Get signature of cancel order",
+        "operationId" : "cancelOrder.post",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/CancelOrderRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request was successful",
+            "schema" : {
+              "type" : "object",
+              "properties" : { }
+            }
+          },
+          "400" : {
+            "description" : "Parameter Error"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
+      }
+    },
+    "/cancelAll" : {
+      "post" : {
+        "summary" : "Get signature of cancelAll order",
+        "operationId" : "cancelAll.post",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/CancelAllRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request was successful",
+            "schema" : {
+              "type" : "object",
+              "properties" : { }
+            }
+          },
+          "400" : {
+            "description" : "Parameter Error"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
+      }
+    }
+  },
+  "definitions" : {
+    "AssetAmount" : {
+      "type" : "object",
+      "properties" : {
+        "assetId" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "NewOrder" : {
+      "type" : "object",
+      "properties" : {
+        "transactionType" : {
+          "type" : "string"
+        },
+        "transactionId" : {
+          "type" : "string",
+          "minLength" : 40,
+          "maxLength" : 40
+        },
+        "refBlockNum" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "refBlockPrefix" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "txExpiration" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "fee" : {
+          "$ref" : "#/definitions/AssetAmount"
+        },
+        "seller" : {
+          "type" : "string"
+        },
+        "amountToSell" : {
+          "$ref" : "#/definitions/AssetAmount"
+        },
+        "minToReceive" : {
+          "$ref" : "#/definitions/AssetAmount"
+        },
+        "expiration" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "signature" : {
+          "type" : "string",
+          "minLength" : 130,
+          "maxLength" : 130
+        },
+        "fill_or_kill" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "CancelOrder" : {
+      "type" : "object",
+      "properties" : {
+        "transactionType" : {
+          "type" : "string"
+        },
+        "transactionId" : {
+          "type" : "string",
+          "minLength" : 40,
+          "maxLength" : 40
+        },
+        "originalTransactionId" : {
+          "type" : "string",
+          "minLength" : 40,
+          "maxLength" : 40
+        },
+        "refBlockNum" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "refBlockPrefix" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "txExpiration" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "orderId" : {
+          "type" : "string"
+        },
+        "fee" : {
+          "$ref" : "#/definitions/AssetAmount"
+        },
+        "feePayingAccount" : {
+          "type" : "string"
+        },
+        "signature" : {
+          "type" : "string",
+          "minLength" : 130,
+          "maxLength" : 130
+        }
+      }
+    },
+    "CancelAll" : {
+      "type" : "object",
+      "properties" : {
+        "transactionType" : {
+          "type" : "string"
+        },
+        "transactionId" : {
+          "type" : "string",
+          "minLength" : 40,
+          "maxLength" : 40
+        },
+        "refBlockNum" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "refBlockPrefix" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "txExpiration" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "fee" : {
+          "$ref" : "#/definitions/AssetAmount"
+        },
+        "seller" : {
+          "type" : "string"
+        },
+        "sellAssetId" : {
+          "type" : "string"
+        },
+        "recvAssetId" : {
+          "type" : "string"
+        },
+        "signature" : {
+          "type" : "string",
+          "minLength" : 130,
+          "maxLength" : 130
+        }
+      }
+    },
+    "NewOrderRequest" : {
+      "type" : "object",
+      "properties" : {
+        "assetPair" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "quantity" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "buy" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "CancelOrderRequest" : {
+      "type" : "object",
+      "properties" : {
+        "originalTransactionId" : {
+          "type" : "string",
+          "minLength" : 40,
+          "maxLength" : 40
+        }
+      }
+    },
+    "CancelAllRequest" : {
+      "type" : "object",
+      "properties" : {
+        "assetPair" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
